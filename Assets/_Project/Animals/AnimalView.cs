@@ -22,7 +22,7 @@ namespace _Project.Animals
 			OnFixedUpdated?.Invoke();
 		}
 
-		private void OnCollisionEnter(Collision collision)
+		private void OnCollisionEnter(UnityEngine.Collision collision)
 		{
 			if (collision.gameObject.TryGetComponent<AnimalView>(out var otherView))
 				OnCollisionEntered?.Invoke(otherView);
