@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18dcbfa738bb4f6c89cd040731857eb3, type: 3}
   m_Name: SpawnLimitsConfig
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Configs.SpawnLimitsConfig
-  _maxPrey: 10
-  _maxPredators: 0
+  _maxPrey: 12
+  _maxPredators: 4
   _minSpawnDistance: 2

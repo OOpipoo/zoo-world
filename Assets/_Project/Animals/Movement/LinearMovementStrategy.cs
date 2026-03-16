@@ -37,6 +37,12 @@ namespace _Project.Animals.Movement
         {
             _bounds = bounds;
  
+            var vel = rigidbody.linearVelocity;
+            vel.x = Mathf.Lerp(vel.x, 0f, _config.VelocityDamping * Time.fixedDeltaTime);
+            vel.z = Mathf.Lerp(vel.z, 0f, _config.VelocityDamping * Time.fixedDeltaTime);
+            vel.y = 0f;
+            rigidbody.linearVelocity = vel;
+ 
             var pos = rigidbody.position;
             if (!Mathf.Approximately(pos.y, _fixedY))
             {
@@ -44,12 +50,17 @@ namespace _Project.Animals.Movement
                 rigidbody.position = pos;
             }
  
-            var vel = rigidbody.linearVelocity;
-            vel.y = 0f;
-            rigidbody.linearVelocity = vel;
-            rigidbody.angularVelocity = Vector3.zero;
- 
             HandleBounds();
+ 
+            if (_direction != Vector3.zero)
+            {
+                var targetRotation = Quaternion.LookRotation(_direction, Vector3.up);
+                rigidbody.transform.rotation = Quaternion.Slerp(
+                    rigidbody.transform.rotation,
+                    targetRotation,
+                    _config.RotationSpeed * Time.fixedDeltaTime
+                );
+            }
  
             rigidbody.MovePosition(new Vector3(
                 rigidbody.position.x + _direction.x * _config.MoveSpeed * Time.fixedDeltaTime,
@@ -58,10 +69,20 @@ namespace _Project.Animals.Movement
             ));
         }
  
+        public void OnCollision(Collision collision) { }
+ 
         private void PickRandomDirection()
         {
-            var angle = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
-            _direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)).normalized;
+            var currentAngle = Mathf.Atan2(_direction.z, _direction.x) * Mathf.Rad2Deg;
+            var maxTurn = _config.MaxTurnAngle;
+            var randomOffset = UnityEngine.Random.Range(-maxTurn, maxTurn);
+            var newAngle = (currentAngle + randomOffset) * Mathf.Deg2Rad;
+ 
+            _direction = new Vector3(
+                Mathf.Cos(newAngle),
+                0f,
+                Mathf.Sin(newAngle)
+            ).normalized;
         }
  
         private void HandleBounds()
@@ -88,10 +109,8 @@ namespace _Project.Animals.Movement
                 pos.z = Mathf.Clamp(pos.z, minZ, maxZ);
             }
  
-            _rigidbody.position = pos;
+            _rigidbody.position = new Vector3(pos.x, _fixedY, pos.z);
         }
- 
-        public void OnCollision(Collision collision) { }
  
         public void Dispose() => _disposable.Dispose();
     }

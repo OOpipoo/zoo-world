@@ -77,11 +77,31 @@ namespace _Project.Animals.Base
             var otherPresenter = _registry.GetPresenter(otherView);
             if (otherPresenter == null) return;
  
+            if (!_model.IsPrey && !IsHeadCollision(otherView))
+                return;
+ 
+            if (_model.IsPrey && !otherPresenter.Animal.IsPrey && !IsPredatorFacingMe(otherView))
+                return;
+ 
             var otherWasAlive = otherPresenter.Animal.IsAlive;
             _collisionHandler.HandleCollision(_model, otherPresenter.Animal);
  
             if (!_model.IsPrey && otherWasAlive && !otherPresenter.Animal.IsAlive)
                 _tastyLabel?.Show(_view.transform);
+        }
+ 
+        private bool IsPredatorFacingMe(AnimalView predatorView)
+        {
+            var toMe = (_view.transform.position - predatorView.transform.position).normalized;
+            var predatorForward = predatorView.transform.forward;
+            return Vector3.Dot(predatorForward, toMe) > 0.2f;
+        }
+        
+        private bool IsHeadCollision(AnimalView otherView)
+        {
+            var toOther = (otherView.transform.position - _view.transform.position).normalized;
+            var forward = _view.transform.forward;
+            return Vector3.Dot(forward, toOther) > 0.2f;
         }
  
         private void OnDied()

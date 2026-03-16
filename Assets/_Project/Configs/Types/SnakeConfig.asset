@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Configs.SnakeConfig
   _animalType: {fileID: 11400000, guid: ced897c34f4706845a72527264d116e0, type: 2}
   _isPrey: 0
-  _moveSpeed: 1
-  _boundsRadius: 0.75
-  _prefab: {fileID: 1079740917179778233, guid: 71583fd5b1cac204cb6c43613c1ea6b8, type: 3}
+  _moveSpeed: 1.5
+  _boundsRadius: 1.1
+  _spawnHeight: 0.15
+  _prefab: {fileID: 6017757209296592784, guid: c7cd4a593e3ec6d428eca002525cf3be, type: 3}
   _directionChangeInterval: 2
+  _rotationSpeed: 3
+  _maxTurnAngle: 60
+  _velocityDamping: 15
