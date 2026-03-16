@@ -1,7 +1,7 @@
 ﻿using _Project.Animals.Base;
 using UnityEngine;
 
-namespace _Project.Animals.Collision
+namespace _Project.Animals.CollisionHandlers
 {
 	public class PredatorCollisionHandler : ICollisionHandler
 	{

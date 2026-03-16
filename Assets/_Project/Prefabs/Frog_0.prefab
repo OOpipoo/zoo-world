@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 481992641660992753}
   - component: {fileID: 8550201590115362733}
   m_Layer: 7
-  m_Name: Frog_1
+  m_Name: Frog_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

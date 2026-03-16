@@ -9,8 +9,9 @@ namespace _Project.Animals.Base
 		public Rigidbody Rigidbody { get; private set; }
 		
 		public event Action<AnimalView> OnCollisionEntered;
+		public event Action<Collision> OnCollisionPhysics;
 		public event Action OnFixedUpdated;
-
+		
 		
 		private void Awake()
 		{
@@ -22,11 +23,15 @@ namespace _Project.Animals.Base
 			OnFixedUpdated?.Invoke();
 		}
 
-		private void OnCollisionEnter(UnityEngine.Collision collision)
+		private void OnCollisionEnter(Collision collision)
 		{
+			OnCollisionPhysics?.Invoke(collision);
+ 
 			if (collision.gameObject.TryGetComponent<AnimalView>(out var otherView))
 				OnCollisionEntered?.Invoke(otherView);
 		}
+		
+		
 		
 		public void Destroy()
 		{

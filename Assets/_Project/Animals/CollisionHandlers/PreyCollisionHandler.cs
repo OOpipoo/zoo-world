@@ -1,6 +1,6 @@
 ﻿using _Project.Animals.Base;
 
-namespace _Project.Animals.Collision
+namespace _Project.Animals.CollisionHandlers
 {
 	public class PreyCollisionHandler : ICollisionHandler
 	{

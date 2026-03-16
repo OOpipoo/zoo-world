@@ -2,6 +2,7 @@
 using UniRx;
 using _Project.Infrastructures.Services;
 using _Project.Ui;
+using UnityEngine;
 
 namespace _Project.Animals.Base
 {
@@ -47,6 +48,7 @@ namespace _Project.Animals.Base
  
             _view.OnFixedUpdated += OnFixedUpdate;
             _view.OnCollisionEntered += OnCollisionEntered;
+            _view.OnCollisionPhysics += OnCollisionPhysics;
  
             _model.IsAliveProperty
                 .Where(isAlive => !isAlive)
@@ -54,6 +56,12 @@ namespace _Project.Animals.Base
                 .AddTo(_disposable);
  
             _registry.Register(this, _view);
+        }
+ 
+        private void OnCollisionPhysics(Collision collision)
+        {
+            if (!_model.IsAlive) return;
+            _movementStrategy.OnCollision(collision);
         }
  
         private void OnFixedUpdate()
@@ -92,9 +100,11 @@ namespace _Project.Animals.Base
         {
             _view.OnFixedUpdated -= OnFixedUpdate;
             _view.OnCollisionEntered -= OnCollisionEntered;
+            _view.OnCollisionPhysics -= OnCollisionPhysics;
             _movementStrategy.Dispose();
             _disposable.Dispose();
         }
     }
 }
+ 
  

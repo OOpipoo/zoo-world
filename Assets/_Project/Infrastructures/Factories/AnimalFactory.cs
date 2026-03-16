@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using _Project.Animals;
+﻿using System.Collections.Generic;
 using _Project.Animals.Base;
-using _Project.Animals.Collision;
+using _Project.Animals.CollisionHandlers;
 using _Project.Animals.Movement;
 using _Project.Configs;
 using _Project.Infrastructures.Services;

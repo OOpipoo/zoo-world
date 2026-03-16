@@ -16,7 +16,6 @@ namespace _Project.Animals.Movement
         private Bounds _bounds;
         private float _fixedY;
  
-        
         public LinearMovementStrategy(SnakeConfig config)
         {
             _config = config;
@@ -91,6 +90,8 @@ namespace _Project.Animals.Movement
  
             _rigidbody.position = pos;
         }
+ 
+        public void OnCollision(Collision collision) { }
  
         public void Dispose() => _disposable.Dispose();
     }
