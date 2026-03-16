@@ -1,4 +1,5 @@
-﻿using _Project.Configs;
+﻿using _Project.Animals.Base;
+using _Project.Configs;
 using UniRx;
 using UnityEngine;
 

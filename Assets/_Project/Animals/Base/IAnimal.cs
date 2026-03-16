@@ -1,7 +1,7 @@
 ﻿using _Project.Configs;
 using UniRx;
 
-namespace _Project.Animals
+namespace _Project.Animals.Base
 {
 	public interface IAnimal
 	{

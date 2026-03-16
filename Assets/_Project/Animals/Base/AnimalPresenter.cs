@@ -12,18 +12,21 @@ namespace _Project.Animals.Base
         private readonly ICollisionHandler _collisionHandler;
         private readonly GameBoundsService _boundsService;
         private readonly AnimalRegistry _registry;
+        private readonly ScoreService _scoreService;
  
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
  
         public IAnimal Animal => _model;
  
+        
         public AnimalPresenter(
             AnimalModel model,
             AnimalView view,
             IMovementStrategy movementStrategy,
             ICollisionHandler collisionHandler,
             GameBoundsService boundsService,
-            AnimalRegistry registry)
+            AnimalRegistry registry,
+            ScoreService scoreService)
         {
             _model = model;
             _view = view;
@@ -31,6 +34,7 @@ namespace _Project.Animals.Base
             _collisionHandler = collisionHandler;
             _boundsService = boundsService;
             _registry = registry;
+            _scoreService = scoreService;
         }
  
         public void Initialize()
@@ -66,6 +70,11 @@ namespace _Project.Animals.Base
  
         private void OnDied()
         {
+            if (_model.IsPrey)
+                _scoreService.AddPreyKill();
+            else
+                _scoreService.AddPredatorKill();
+ 
             _registry.Unregister(_view);
             _view.Destroy();
             Dispose();

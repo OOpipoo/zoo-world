@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _Project.Animals
+namespace _Project.Animals.Base
 {
 	public interface IMovementStrategy
 	{

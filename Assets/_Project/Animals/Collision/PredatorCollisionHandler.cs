@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Project.Animals.Base;
+using UnityEngine;
 
 namespace _Project.Animals.Collision
 {

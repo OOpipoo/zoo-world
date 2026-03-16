@@ -1,4 +1,6 @@
-﻿namespace _Project.Animals.Collision
+﻿using _Project.Animals.Base;
+
+namespace _Project.Animals.Collision
 {
 	public class PreyCollisionHandler : ICollisionHandler
 	{
