@@ -1,10 +1,11 @@
 ﻿using System;
 using UniRx;
 using _Project.Infrastructures.Services;
+using _Project.Ui;
 
 namespace _Project.Animals.Base
 {
-	public class AnimalPresenter : IDisposable
+	 public class AnimalPresenter : IDisposable
     {
         private readonly AnimalModel _model;
         private readonly AnimalView _view;
@@ -13,12 +14,13 @@ namespace _Project.Animals.Base
         private readonly GameBoundsService _boundsService;
         private readonly AnimalRegistry _registry;
         private readonly ScoreService _scoreService;
+        private readonly TastyLabel _tastyLabel;
  
         private readonly CompositeDisposable _disposable = new CompositeDisposable();
  
         public IAnimal Animal => _model;
+        public AnimalView View => _view;
  
-        
         public AnimalPresenter(
             AnimalModel model,
             AnimalView view,
@@ -26,7 +28,8 @@ namespace _Project.Animals.Base
             ICollisionHandler collisionHandler,
             GameBoundsService boundsService,
             AnimalRegistry registry,
-            ScoreService scoreService)
+            ScoreService scoreService,
+            TastyLabel tastyLabel = null)
         {
             _model = model;
             _view = view;
@@ -35,6 +38,7 @@ namespace _Project.Animals.Base
             _boundsService = boundsService;
             _registry = registry;
             _scoreService = scoreService;
+            _tastyLabel = tastyLabel;
         }
  
         public void Initialize()
@@ -65,7 +69,11 @@ namespace _Project.Animals.Base
             var otherPresenter = _registry.GetPresenter(otherView);
             if (otherPresenter == null) return;
  
+            var otherWasAlive = otherPresenter.Animal.IsAlive;
             _collisionHandler.HandleCollision(_model, otherPresenter.Animal);
+ 
+            if (!_model.IsPrey && otherWasAlive && !otherPresenter.Animal.IsAlive)
+                _tastyLabel?.Show(_view.transform);
         }
  
         private void OnDied()
@@ -84,7 +92,9 @@ namespace _Project.Animals.Base
         {
             _view.OnFixedUpdated -= OnFixedUpdate;
             _view.OnCollisionEntered -= OnCollisionEntered;
+            _movementStrategy.Dispose();
             _disposable.Dispose();
         }
     }
 }
+ 

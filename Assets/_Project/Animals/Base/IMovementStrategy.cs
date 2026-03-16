@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace _Project.Animals.Base
 {
-	public interface IMovementStrategy
+	public interface IMovementStrategy : IDisposable
 	{
 		/// <param name="rigidbody">Rigidbody animal for physics application</param>
 		/// <param name="bounds">Playing field boundaries for reversal</param>

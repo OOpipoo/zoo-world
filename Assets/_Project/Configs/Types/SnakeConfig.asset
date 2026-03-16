@@ -15,5 +15,5 @@ MonoBehaviour:
   _animalType: {fileID: 11400000, guid: ced897c34f4706845a72527264d116e0, type: 2}
   _isPrey: 0
   _moveSpeed: 3
-  _prefab: {fileID: 0}
+  _prefab: {fileID: 1079740917179778233, guid: 71583fd5b1cac204cb6c43613c1ea6b8, type: 3}
   _directionChangeInterval: 2

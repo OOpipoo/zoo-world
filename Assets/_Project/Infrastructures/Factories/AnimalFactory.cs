@@ -6,8 +6,10 @@ using _Project.Animals.Collision;
 using _Project.Animals.Movement;
 using _Project.Configs;
 using _Project.Infrastructures.Services;
+using _Project.Ui;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace _Project.Infrastructures.Factories
@@ -18,6 +20,7 @@ namespace _Project.Infrastructures.Factories
         private readonly GameBoundsService _boundsService;
         private readonly AnimalRegistry _registry;
         private readonly ScoreService _scoreService;
+        private readonly TastyLabel _tastyLabelPrefab;
         private readonly Dictionary<AnimalTypeSO, AnimalConfig> _configs;
  
         public AnimalFactory(
@@ -25,12 +28,14 @@ namespace _Project.Infrastructures.Factories
             GameBoundsService boundsService,
             AnimalRegistry registry,
             ScoreService scoreService,
+            TastyLabel tastyLabelPrefab,
             List<AnimalConfig> configs)
         {
             _container = container;
             _boundsService = boundsService;
             _registry = registry;
             _scoreService = scoreService;
+            _tastyLabelPrefab = tastyLabelPrefab;
  
             _configs = new Dictionary<AnimalTypeSO, AnimalConfig>();
             foreach (var config in configs)
@@ -51,6 +56,10 @@ namespace _Project.Infrastructures.Factories
             var movementStrategy = CreateMovementStrategy(config);
             var collisionHandler = CreateCollisionHandler(config);
  
+            TastyLabel tastyLabel = null;
+            if (!config.IsPrey)
+                tastyLabel = Object.Instantiate(_tastyLabelPrefab, view.transform);
+ 
             var presenter = new AnimalPresenter(
                 model,
                 view,
@@ -58,7 +67,8 @@ namespace _Project.Infrastructures.Factories
                 collisionHandler,
                 _boundsService,
                 _registry,
-                _scoreService
+                _scoreService,
+                tastyLabel
             );
  
             presenter.Initialize();
@@ -75,7 +85,7 @@ namespace _Project.Infrastructures.Factories
         {
             return config switch
             {
-                FrogConfig frogConfig => new JumpMovementStrategy(frogConfig),
+                FrogConfig frogConfig   => new JumpMovementStrategy(frogConfig),
                 SnakeConfig snakeConfig => new LinearMovementStrategy(snakeConfig),
                 _ => throw new ArgumentException($"Unknown config type: {config.GetType().Name}")
             };
@@ -85,7 +95,7 @@ namespace _Project.Infrastructures.Factories
         {
             return config.IsPrey
                 ? new PreyCollisionHandler()
-                : (ICollisionHandler)new PredatorCollisionHandler();
+                : (ICollisionHandler) new PredatorCollisionHandler();
         }
  
         private Vector3 GetRandomSpawnPosition()

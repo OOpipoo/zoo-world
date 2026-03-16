@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6940203089627377733}
   - component: {fileID: 3899175988317335393}
-  - component: {fileID: 8495793830028486416}
+  - component: {fileID: 7375393453942687022}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Zenject::Zenject.ProjectContext
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 7375393453942687022}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -61,7 +62,7 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
---- !u!114 &8495793830028486416
+--- !u!114 &7375393453942687022
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -70,6 +71,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2264025988541277078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f36e37fb74779904f9caa9ba765a74f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 175ed7ac0d754da8af35d4e93eb2df0a, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Zenject-IntegrationTests::Zenject.Tests.TestDestructionOrder.ProjectInstaller
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Installers.ProjectInstaller
+  _mainCamera: {fileID: 0}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7800605127450748304}
   - component: {fileID: 9019569328767010583}
   - component: {fileID: 3027921480735440958}
+  - component: {fileID: 4964015442988030799}
   m_Layer: 5
   m_Name: TastyLabel
   m_TagString: Untagged
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4964015442988030799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962596724180400232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 329b6327b7cf4c9ea3f9f80acfa2f427, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Project.Ui.TastyLabel
+  _displayDuration: 2
+  _offsetY: -1
 --- !u!1 &7574953456571880451
 GameObject:
   m_ObjectHideFlags: 0
