@@ -9,6 +9,7 @@ namespace _Project.Infrastructures.Services
  
 		public Bounds Bounds { get; private set; }
  
+		
 		public GameBoundsService(Camera camera)
 		{
 			_camera = camera;
@@ -28,3 +29,4 @@ namespace _Project.Infrastructures.Services
 		}
 	}
 }
+

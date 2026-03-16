@@ -21,6 +21,7 @@ namespace _Project.Infrastructures.Factories
         private readonly AnimalRegistry _registry;
         private readonly ScoreService _scoreService;
         private readonly TastyLabel _tastyLabelPrefab;
+        private readonly SpawnLimitsConfig _spawnLimits;
         private readonly Dictionary<AnimalTypeSO, AnimalConfig> _configs;
  
         public AnimalFactory(
@@ -29,6 +30,7 @@ namespace _Project.Infrastructures.Factories
             AnimalRegistry registry,
             ScoreService scoreService,
             TastyLabel tastyLabelPrefab,
+            SpawnLimitsConfig spawnLimits,
             List<AnimalConfig> configs)
         {
             _container = container;
@@ -36,6 +38,7 @@ namespace _Project.Infrastructures.Factories
             _registry = registry;
             _scoreService = scoreService;
             _tastyLabelPrefab = tastyLabelPrefab;
+            _spawnLimits = spawnLimits;
  
             _configs = new Dictionary<AnimalTypeSO, AnimalConfig>();
             foreach (var config in configs)
@@ -50,7 +53,7 @@ namespace _Project.Infrastructures.Factories
                 return null;
             }
  
-            var spawnPosition = GetRandomSpawnPosition();
+            var spawnPosition = GetRandomSpawnPosition(config);
             var view = SpawnView(config.Prefab, spawnPosition);
             var model = new AnimalModel(config);
             var movementStrategy = CreateMovementStrategy(config);
@@ -87,7 +90,7 @@ namespace _Project.Infrastructures.Factories
             {
                 FrogConfig frogConfig   => new JumpMovementStrategy(frogConfig),
                 SnakeConfig snakeConfig => new LinearMovementStrategy(snakeConfig),
-                _ => throw new ArgumentException($"Unknown config type: {config.GetType().Name}")
+                _ => throw new System.ArgumentException($"Unknown config type: {config.GetType().Name}")
             };
         }
  
@@ -98,12 +101,37 @@ namespace _Project.Infrastructures.Factories
                 : (ICollisionHandler) new PredatorCollisionHandler();
         }
  
-        private Vector3 GetRandomSpawnPosition()
+        private static readonly Collider[] _overlapBuffer = new Collider[4];
+        private static readonly int AnimalsLayerMask = 1 << LayerMask.NameToLayer("Animals");
+ 
+        private Vector3 GetRandomSpawnPosition(AnimalConfig config)
         {
             var bounds = _boundsService.Bounds;
+            const int maxAttempts = 20;
+ 
+            for (int i = 0; i < maxAttempts; i++)
+            {
+                var candidate = new Vector3(
+                    Random.Range(bounds.min.x, bounds.max.x),
+                    config.SpawnHeight,
+                    Random.Range(bounds.min.z, bounds.max.z)
+                );
+ 
+                var hits = Physics.OverlapSphereNonAlloc(
+                    candidate,
+                    _spawnLimits.MinSpawnDistance,
+                    _overlapBuffer,
+                    AnimalsLayerMask
+                );
+ 
+                if (hits == 0)
+                    return candidate;
+            }
+ 
+            Debug.LogWarning("[AnimalFactory] Could not find free spawn position after 20 attempts.");
             return new Vector3(
                 Random.Range(bounds.min.x, bounds.max.x),
-                0f,
+                config.SpawnHeight,
                 Random.Range(bounds.min.z, bounds.max.z)
             );
         }
