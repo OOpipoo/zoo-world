@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Project.Configs;
 using _Project.Infrastructures.Factories;
+using _Project.Infrastructures.ObjectPools;
 using _Project.Infrastructures.Services;
 using _Project.Ui;
 using UnityEngine;
@@ -12,25 +13,27 @@ namespace _Project.Installers
     {
         [Header("Scene References")]
         [SerializeField] private Camera _mainCamera;
-        [SerializeField] private TastyLabel _tastyLabelPrefab;
+        [SerializeField] private TastyLabelPool _tastyLabelPool;
+        [SerializeField] private HudView _hudView;
  
         [Header("Configs")]
         [SerializeField] private SpawnLimitsConfig _spawnLimitsConfig;
         [SerializeField] private List<AnimalConfig> _animalConfigs;
-        
-
+ 
         public override void InstallBindings()
         {
             BindCamera();
             BindGameBoundsService();
             BindAnimalConfigs();
             BindSpawnLimits();
-            BindTastyLabel();
+            BindTastyLabelPool();
+            BindAnimalPool();
             BindAnimalRegistry();
             BindAnimalFactory();
             BindAnimalSpawnService();
+            BindHudView();
         }
-
+ 
         private void BindCamera()
         {
             Container
@@ -38,14 +41,14 @@ namespace _Project.Installers
                 .FromInstance(_mainCamera)
                 .AsSingle();
         }
-
+ 
         private void BindGameBoundsService()
         {
             Container
                 .BindInterfacesAndSelfTo<GameBoundsService>()
                 .AsSingle();
         }
-
+ 
         private void BindAnimalConfigs()
         {
             Container
@@ -53,7 +56,7 @@ namespace _Project.Installers
                 .FromInstance(_animalConfigs)
                 .AsSingle();
         }
-
+ 
         private void BindSpawnLimits()
         {
             Container
@@ -61,33 +64,50 @@ namespace _Project.Installers
                 .FromInstance(_spawnLimitsConfig)
                 .AsSingle();
         }
-
-        private void BindTastyLabel()
+ 
+        private void BindTastyLabelPool()
         {
             Container
-                .Bind<TastyLabel>()
-                .FromInstance(_tastyLabelPrefab)
+                .Bind<TastyLabelPool>()
+                .FromInstance(_tastyLabelPool)
                 .AsSingle();
         }
-
+ 
+        private void BindAnimalPool()
+        {
+            var animalPool = new AnimalPool(_animalConfigs);
+            Container
+                .Bind<AnimalPool>()
+                .FromInstance(animalPool)
+                .AsSingle();
+        }
+ 
         private void BindAnimalRegistry()
         {
             Container
                 .Bind<AnimalRegistry>()
                 .AsSingle();
         }
-
+ 
         private void BindAnimalFactory()
         {
             Container
                 .Bind<AnimalFactory>()
                 .AsSingle();
         }
-
+ 
         private void BindAnimalSpawnService()
         {
             Container
                 .BindInterfacesAndSelfTo<AnimalSpawnService>()
+                .AsSingle();
+        }
+ 
+        private void BindHudView()
+        {
+            Container
+                .Bind<HudView>()
+                .FromInstance(_hudView)
                 .AsSingle();
         }
     }

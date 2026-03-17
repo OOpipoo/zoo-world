@@ -1,5 +1,4 @@
 ﻿using _Project.Animals.Base;
-using UnityEngine;
 
 namespace _Project.Animals.CollisionHandlers
 {
@@ -8,20 +7,24 @@ namespace _Project.Animals.CollisionHandlers
 		public void HandleCollision(IAnimal self, IAnimal other)
 		{
 			if (!other.IsAlive) return;
- 
+			if (!self.IsAlive) return;
+
 			if (other.IsPrey)
 			{
 				other.Die();
 				return;
 			}
- 
-			DieRandom(self, other);
-		}
 
-		private void DieRandom(IAnimal self, IAnimal other)
-		{
-			var selfDies = Random.value > 0.5f;
-			if (selfDies)
+			var selfHash = self.GetHashCode();
+			var otherHash = other.GetHashCode();
+
+			if (selfHash == otherHash)
+			{
+				self.Die();
+				return;
+			}
+
+			if (selfHash < otherHash)
 				self.Die();
 			else
 				other.Die();

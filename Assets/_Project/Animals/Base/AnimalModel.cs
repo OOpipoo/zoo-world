@@ -13,6 +13,7 @@ namespace _Project.Animals.Base
 		public IReadOnlyReactiveProperty<bool> IsAliveProperty => _isAlive;
 		public AnimalConfig Config { get; }
  
+		
 		public AnimalModel(AnimalConfig config)
 		{
 			Config = config;

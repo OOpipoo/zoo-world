@@ -3,39 +3,38 @@ using _Project.Animals.Base;
 using _Project.Animals.CollisionHandlers;
 using _Project.Animals.Movement;
 using _Project.Configs;
+using _Project.Infrastructures.ObjectPools;
 using _Project.Infrastructures.Services;
 using _Project.Ui;
 using UnityEngine;
-using Zenject;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace _Project.Infrastructures.Factories
 {
 	public class AnimalFactory
     {
-        private readonly DiContainer _container;
+        private readonly AnimalPool _animalPool;
         private readonly GameBoundsService _boundsService;
         private readonly AnimalRegistry _registry;
         private readonly ScoreService _scoreService;
-        private readonly TastyLabel _tastyLabelPrefab;
+        private readonly TastyLabelPool _tastyLabelPool;
         private readonly SpawnLimitsConfig _spawnLimits;
         private readonly Dictionary<AnimalTypeSO, AnimalConfig> _configs;
  
         public AnimalFactory(
-            DiContainer container,
+            AnimalPool animalPool,
             GameBoundsService boundsService,
             AnimalRegistry registry,
             ScoreService scoreService,
-            TastyLabel tastyLabelPrefab,
+            TastyLabelPool tastyLabelPool,
             SpawnLimitsConfig spawnLimits,
             List<AnimalConfig> configs)
         {
-            _container = container;
+            _animalPool = animalPool;
             _boundsService = boundsService;
             _registry = registry;
             _scoreService = scoreService;
-            _tastyLabelPrefab = tastyLabelPrefab;
+            _tastyLabelPool = tastyLabelPool;
             _spawnLimits = spawnLimits;
  
             _configs = new Dictionary<AnimalTypeSO, AnimalConfig>();
@@ -47,19 +46,21 @@ namespace _Project.Infrastructures.Factories
         {
             if (!_configs.TryGetValue(animalType, out var config))
             {
-                Debug.LogError($"[AnimalFactory] No config found for type: {animalType.DisplayName}");
+                Debug.LogError($"[AnimalFactory] No config for: {animalType.DisplayName}");
                 return null;
             }
  
             var spawnPosition = GetRandomSpawnPosition(config);
-            var view = SpawnView(config.Prefab, spawnPosition);
+            var view = _animalPool.Get(animalType, spawnPosition);
+ 
+            if (view == null)
+            {
+                Debug.LogError($"[AnimalFactory] AnimalPool returned null view for {animalType.DisplayName}");
+                return null;
+            }
             var model = new AnimalModel(config);
             var movementStrategy = CreateMovementStrategy(config);
             var collisionHandler = CreateCollisionHandler(config);
- 
-            TastyLabel tastyLabel = null;
-            if (!config.IsPrey)
-                tastyLabel = Object.Instantiate(_tastyLabelPrefab, view.transform);
  
             var presenter = new AnimalPresenter(
                 model,
@@ -69,17 +70,12 @@ namespace _Project.Infrastructures.Factories
                 _boundsService,
                 _registry,
                 _scoreService,
-                tastyLabel
+                _animalPool,
+                config.IsPrey ? null : _tastyLabelPool
             );
  
             presenter.Initialize();
             return presenter;
-        }
- 
-        private AnimalView SpawnView(GameObject prefab, Vector3 position)
-        {
-            var instance = _container.InstantiatePrefab(prefab, position, Quaternion.identity, null);
-            return instance.GetComponent<AnimalView>();
         }
  
         private IMovementStrategy CreateMovementStrategy(AnimalConfig config)
@@ -105,14 +101,20 @@ namespace _Project.Infrastructures.Factories
         private Vector3 GetRandomSpawnPosition(AnimalConfig config)
         {
             var bounds = _boundsService.Bounds;
+            var radius = config.BoundsRadius;
             const int maxAttempts = 20;
+ 
+            var minX = bounds.min.x + radius;
+            var maxX = bounds.max.x - radius;
+            var minZ = bounds.min.z + radius;
+            var maxZ = bounds.max.z - radius;
  
             for (int i = 0; i < maxAttempts; i++)
             {
                 var candidate = new Vector3(
-                    Random.Range(bounds.min.x, bounds.max.x),
+                    Random.Range(minX, maxX),
                     config.SpawnHeight,
-                    Random.Range(bounds.min.z, bounds.max.z)
+                    Random.Range(minZ, maxZ)
                 );
  
                 var hits = Physics.OverlapSphereNonAlloc(
@@ -128,9 +130,9 @@ namespace _Project.Infrastructures.Factories
  
             Debug.LogWarning("[AnimalFactory] Could not find free spawn position after 20 attempts.");
             return new Vector3(
-                Random.Range(bounds.min.x, bounds.max.x),
+                Random.Range(minX, maxX),
                 config.SpawnHeight,
-                Random.Range(bounds.min.z, bounds.max.z)
+                Random.Range(minZ, maxZ)
             );
         }
     }

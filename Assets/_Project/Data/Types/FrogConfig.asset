@@ -18,6 +18,7 @@ MonoBehaviour:
   _boundsRadius: 0.5
   _spawnHeight: 0.25
   _prefab: {fileID: 7149347582044303989, guid: 3b6191af3980f294cba8d1fd5c5b16c4, type: 3}
+  _poolSize: 5
   _jumpInterval: 1
   _jumpDuration: 0.5
   _jumpDistance: 2

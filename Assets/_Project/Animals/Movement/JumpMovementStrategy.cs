@@ -1,8 +1,8 @@
 ﻿using System;
-using _Project.Animals.Base;
-using _Project.Configs;
 using UniRx;
 using UnityEngine;
+using _Project.Animals.Base;
+using _Project.Configs;
 using Random = UnityEngine.Random;
 
 namespace _Project.Animals.Movement

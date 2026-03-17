@@ -22,12 +22,16 @@ namespace _Project.Configs
 		[Header("Spawn")]
 		[SerializeField] private GameObject _prefab;
 		
+		[Header("Pool Size")]
+		[SerializeField] private int _poolSize = 5;
  
+		
 		public AnimalTypeSO AnimalType => _animalType;
 		public bool IsPrey => _isPrey;
 		public float MoveSpeed => _moveSpeed;
 		public float BoundsRadius => _boundsRadius;
 		public float SpawnHeight => _spawnHeight;
 		public GameObject Prefab => _prefab;
+		public int PoolSize => _poolSize;
 	}
 }

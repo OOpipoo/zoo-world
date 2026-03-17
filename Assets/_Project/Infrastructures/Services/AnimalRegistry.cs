@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using _Project.Animals;
-using _Project.Animals.Base;
+﻿using _Project.Animals.Base;
+using System.Collections.Generic;
 
 namespace _Project.Infrastructures.Services
 {

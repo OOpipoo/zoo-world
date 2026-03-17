@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using _Project.Configs;
-using _Project.Infrastructures.Factories;
-using UniRx;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using UniRx;
+using _Project.Configs;
+using _Project.Infrastructures.Factories;
 using Random = UnityEngine.Random;
 
 namespace _Project.Infrastructures.Services
