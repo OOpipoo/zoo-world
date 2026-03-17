@@ -1,7 +1,7 @@
-using _Project.Animals.Base;
 using System.Collections.Generic;
+using _Project.Animals.Core;
 
-namespace _Project.Infrastructures.Services
+namespace _Project.Infrastructure.Services
 {
 	public class AnimalRegistry
 	{

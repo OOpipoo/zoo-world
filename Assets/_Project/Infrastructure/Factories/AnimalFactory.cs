@@ -1,14 +1,16 @@
 using System.Collections.Generic;
-using _Project.Animals.Base;
+using _Project.Animals.Abstractions;
 using _Project.Animals.CollisionHandlers;
+using _Project.Animals.Core;
 using _Project.Animals.Movement;
 using _Project.Configs;
-using _Project.Infrastructures.ObjectPools;
+using _Project.Infrastructure.Pools;
+using _Project.Infrastructure.Services;
 using _Project.Infrastructures.Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace _Project.Infrastructures.Factories
+namespace _Project.Infrastructure.Factories
 {
 	public class AnimalFactory
     {

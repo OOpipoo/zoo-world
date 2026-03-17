@@ -1,7 +1,8 @@
+using _Project.Animals.Abstractions;
 using _Project.Configs;
 using UniRx;
 
-namespace _Project.Animals.Base
+namespace _Project.Animals.Core
 {
 	public class AnimalModel : IAnimal
 	{

@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
 
-namespace _Project.Infrastructures.ObjectPools
+namespace _Project.Infrastructure.Pools
 {
     public abstract class BasePool : MonoBehaviour
     {

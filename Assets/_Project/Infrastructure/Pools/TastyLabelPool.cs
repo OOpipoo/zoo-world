@@ -1,7 +1,7 @@
 using UnityEngine;
 using _Project.Ui;
 
-namespace _Project.Infrastructures.ObjectPools
+namespace _Project.Infrastructure.Pools
 {
     public class TastyLabelPool : BasePool
     {

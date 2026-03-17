@@ -1,4 +1,4 @@
-﻿using _Project.Animals.Base;
+﻿using _Project.Animals.Abstractions;
 
 namespace _Project.Animals.CollisionHandlers
 {

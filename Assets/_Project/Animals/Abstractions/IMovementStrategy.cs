@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace _Project.Animals.Base
+namespace _Project.Animals.Abstractions
 {
 	public interface IMovementStrategy : IDisposable
 	{

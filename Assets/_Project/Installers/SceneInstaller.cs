@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using _Project.Configs;
-using _Project.Infrastructures.Factories;
-using _Project.Infrastructures.ObjectPools;
+using _Project.Infrastructure.Factories;
+using _Project.Infrastructure.Pools;
+using _Project.Infrastructure.Services;
 using _Project.Infrastructures.Services;
 using _Project.Ui;
 using UnityEngine;

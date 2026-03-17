@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace _Project.Animals.Base
+namespace _Project.Animals.Core
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class AnimalView : MonoBehaviour

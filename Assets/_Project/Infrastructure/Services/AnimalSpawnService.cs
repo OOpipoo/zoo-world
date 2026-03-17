@@ -5,7 +5,8 @@ using UnityEngine;
 using Zenject;
 using UniRx;
 using _Project.Configs;
-using _Project.Infrastructures.Factories;
+using _Project.Infrastructure.Factories;
+using _Project.Infrastructure.Services;
 using Random = UnityEngine.Random;
 
 namespace _Project.Infrastructures.Services

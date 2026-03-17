@@ -1,4 +1,4 @@
-namespace _Project.Animals.Base
+namespace _Project.Animals.Abstractions
 {
 	public interface ICollisionHandler
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using UniRx;
 using UnityEngine;
-using _Project.Animals.Base;
+using _Project.Animals.Abstractions;
 using _Project.Configs;
 
 namespace _Project.Animals.Movement

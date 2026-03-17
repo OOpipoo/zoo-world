@@ -1,11 +1,13 @@
 using System;
-using _Project.Infrastructures.ObjectPools;
+using _Project.Animals.Abstractions;
+using _Project.Infrastructure.Pools;
+using _Project.Infrastructure.Services;
 using _Project.Infrastructures.Services;
 using _Project.Ui;
 using UniRx;
 using UnityEngine;
 
-namespace _Project.Animals.Base
+namespace _Project.Animals.Core
 {
     public class AnimalPresenter : IDisposable
     {
