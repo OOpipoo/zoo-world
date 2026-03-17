@@ -1,5 +1,4 @@
-﻿using _Project.Infrastructures.Services;
-using UnityEngine;
+using _Project.Infrastructures.Services;
 using Zenject;
 
 namespace _Project.Installers
@@ -8,13 +7,8 @@ namespace _Project.Installers
 	{
 		public override void InstallBindings()
 		{
-			BindScoreService();
-		}
- 
-		private void BindScoreService()
-		{
 			Container
-				.BindInterfacesAndSelfTo<ScoreService>()
+				.Bind<ScoreService>()
 				.AsSingle();
 		}
 	}

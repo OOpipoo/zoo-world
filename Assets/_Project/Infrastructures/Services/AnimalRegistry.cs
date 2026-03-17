@@ -1,4 +1,4 @@
-﻿using _Project.Animals.Base;
+using _Project.Animals.Base;
 using System.Collections.Generic;
 
 namespace _Project.Infrastructures.Services
@@ -7,25 +7,23 @@ namespace _Project.Infrastructures.Services
 	{
 		private readonly Dictionary<AnimalView, AnimalPresenter> _registry
 			= new Dictionary<AnimalView, AnimalPresenter>();
- 
+
 		public void Register(AnimalPresenter presenter, AnimalView view)
 		{
-			if (!_registry.ContainsKey(view))
-				_registry.Add(view, presenter);
+			_registry[view] = presenter;
 		}
- 
+
 		public void Unregister(AnimalView view)
 		{
-			if (_registry.ContainsKey(view))
-				_registry.Remove(view);
+			_registry.Remove(view);
 		}
- 
+
 		public AnimalPresenter GetPresenter(AnimalView view)
 		{
 			_registry.TryGetValue(view, out var presenter);
 			return presenter;
 		}
- 
+
 		public IEnumerable<AnimalPresenter> GetAll() => _registry.Values;
 	}
 }

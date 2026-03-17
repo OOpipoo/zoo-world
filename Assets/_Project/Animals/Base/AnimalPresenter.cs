@@ -1,9 +1,9 @@
 using System;
 using _Project.Infrastructures.ObjectPools;
 using _Project.Infrastructures.Services;
+using _Project.Ui;
 using UniRx;
 using UnityEngine;
-using ZooWorld.UI;
 
 namespace _Project.Animals.Base
 {
@@ -27,7 +27,6 @@ namespace _Project.Animals.Base
         public IAnimal Animal => _model;
         public AnimalView View => _view;
 
-        
         public AnimalPresenter(
             AnimalModel model,
             AnimalView view,
@@ -146,12 +145,11 @@ namespace _Project.Animals.Base
             HideKillLabel();
 
             if (_model.IsPrey)
-                _scoreService.AddPreyKill();
+                _scoreService.AddPreyDeath();
             else
-                _scoreService.AddPredatorKill();
+                _scoreService.AddPredatorDeath();
 
             _registry.Unregister(_view);
-            _view.ResetState();
             _animalPool.Return(_view, _model.AnimalType);
             Dispose();
         }

@@ -14,7 +14,6 @@ namespace _Project.Infrastructures.ObjectPools
         public AnimalPool(List<AnimalConfig> configs)
         {
             var root = new GameObject("[Animal Pool]");
-            Object.DontDestroyOnLoad(root);
             _poolRoot = root.transform;
  
             foreach (var config in configs)

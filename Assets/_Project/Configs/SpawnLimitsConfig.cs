@@ -1,9 +1,7 @@
-﻿using System;
 using UnityEngine;
 
 namespace _Project.Configs
 {
-	[Serializable]
 	[CreateAssetMenu(fileName = "SpawnLimitsConfig", menuName = "SO/ZooWorld/Configs/Spawn Limits Config")]
 	public class SpawnLimitsConfig : ScriptableObject
 	{
@@ -11,11 +9,9 @@ namespace _Project.Configs
 		[SerializeField] private int _maxPredators = 5;
 		[Space]
 		[SerializeField] private float _minSpawnDistance = 2f;
-		
-		
+
 		public int MaxPrey => _maxPrey;
 		public int MaxPredators => _maxPredators;
 		public float MinSpawnDistance => _minSpawnDistance;
 	}
 }
-

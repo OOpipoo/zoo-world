@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace ZooWorld.UI
+namespace _Project.Ui
 {
     public class TastyLabel : MonoBehaviour
     {

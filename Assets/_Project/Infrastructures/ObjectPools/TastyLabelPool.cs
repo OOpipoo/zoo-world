@@ -1,5 +1,5 @@
 using UnityEngine;
-using ZooWorld.UI;
+using _Project.Ui;
 
 namespace _Project.Infrastructures.ObjectPools
 {

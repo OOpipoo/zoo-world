@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 using UniRx;
@@ -32,15 +32,13 @@ namespace _Project.Infrastructures.Services
 			_configs = configs;
 			_spawnLimits = spawnLimits;
 		}
- 
+
 		public void Initialize() => ScheduleNextSpawn();
- 
+
 		private void ScheduleNextSpawn()
 		{
-			var interval = Random.Range(MinSpawnInterval, MaxSpawnInterval);
- 
 			Observable
-				.Timer(TimeSpan.FromSeconds(interval))
+				.Timer(TimeSpan.FromSeconds(Random.Range(MinSpawnInterval, MaxSpawnInterval)))
 				.Subscribe(_ =>
 				{
 					TrySpawnRandom();
@@ -48,31 +46,26 @@ namespace _Project.Infrastructures.Services
 				})
 				.AddTo(_disposable);
 		}
- 
+
 		private void TrySpawnRandom()
 		{
-			var preyCount = _registry.GetAll().Count(p => p.Animal.IsPrey);
-			var predatorCount = _registry.GetAll().Count(p => !p.Animal.IsPrey);
- 
+			var all = _registry.GetAll().ToList();
+			var preyCount = all.Count(p => p.Animal.IsPrey);
+			var predatorCount = all.Count - preyCount;
+
 			var available = _configs.Where(c =>
-			{
-				if (c.IsPrey && preyCount >= _spawnLimits.MaxPrey) 
-					return false;
-				if (!c.IsPrey && predatorCount >= _spawnLimits.MaxPredators) 
-					return false;
-				return true;
-			}).ToList();
- 
+				c.IsPrey ? preyCount < _spawnLimits.MaxPrey : predatorCount < _spawnLimits.MaxPredators
+			).ToList();
+
 			if (available.Count == 0)
 			{
 				Debug.Log("[AnimalSpawnService] All limits reached, skipping spawn.");
 				return;
 			}
- 
-			var randomConfig = available[UnityEngine.Random.Range(0, available.Count)];
-			_factory.Create(randomConfig.AnimalType);
+
+			_factory.Create(available[Random.Range(0, available.Count)].AnimalType);
 		}
- 
+
 		public void Dispose() => _disposable.Dispose();
 	}
 }

@@ -16,7 +16,6 @@ namespace _Project.Animals.Base
 		public event Action<Collision> OnCollisionPhysics;
 		public event Action OnFixedUpdated;
 
-		
 		private void Awake()
 		{
 			Rigidbody = GetComponent<Rigidbody>();
