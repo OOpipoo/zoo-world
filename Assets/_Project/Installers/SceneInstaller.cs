@@ -8,6 +8,7 @@ using _Project.Ui;
 using UnityEngine;
 using Zenject;
 
+
 namespace _Project.Installers
 {
     public class SceneInstaller : MonoInstaller
@@ -32,6 +33,7 @@ namespace _Project.Installers
             BindAnimalRegistry();
             BindAnimalFactory();
             BindAnimalSpawnService();
+            BindGameService();
             BindHudView();
         }
  
@@ -104,6 +106,13 @@ namespace _Project.Installers
                 .AsSingle();
         }
  
+        private void BindGameService()
+        {
+            Container
+                .Bind<GameService>()
+                .AsSingle();
+        }
+
         private void BindHudView()
         {
             Container
