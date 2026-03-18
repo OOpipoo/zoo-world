@@ -12,5 +12,11 @@ namespace _Project.Infrastructures.Services
 
 		public void AddPreyDeath() => _preyDeathCount.Value++;
 		public void AddPredatorDeath() => _predatorDeathCount.Value++;
+
+		public void Reset()
+		{
+			_preyDeathCount.Value = 0;
+			_predatorDeathCount.Value = 0;
+		}
 	}
 }

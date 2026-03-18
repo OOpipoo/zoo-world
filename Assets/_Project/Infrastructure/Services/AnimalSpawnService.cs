@@ -67,6 +67,12 @@ namespace _Project.Infrastructures.Services
 			_factory.Create(available[Random.Range(0, available.Count)].AnimalType);
 		}
 
+		public void Restart()
+		{
+			_disposable.Clear();
+			ScheduleNextSpawn();
+		}
+
 		public void Dispose() => _disposable.Dispose();
 	}
 }
