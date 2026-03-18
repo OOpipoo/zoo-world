@@ -32,7 +32,7 @@ AnimalPresenter  - wires model <-> view, drives physics tick
 
 ## Configuration
 
-All values are ScriptableObjects in `Assets/_Project/Configs/` and can be tuned from the Inspector.
+All values are ScriptableObjects in `Assets/_Project/Data/` and can be tuned from the Inspector.
 
 **FrogConfig**
 | Parameter | Value |
@@ -80,7 +80,7 @@ Assets/_Project/
 │   ├── Core/               # AnimalModel, AnimalView, AnimalPresenter
 │   ├── CollisionHandlers/  # PreyCollisionHandler, PredatorCollisionHandler
 │   └── Movement/           # JumpMovementStrategy, LinearMovementStrategy
-├── Configs/                # AnimalConfig, FrogConfig, SnakeConfig, SpawnLimitsConfig
+├── Data/                   # AnimalConfig, FrogConfig, SnakeConfig, SpawnLimitsConfig
 ├── Infrastructure/
 │   ├── Factories/          # AnimalFactory
 │   ├── Pools/              # BasePool<T>, AnimalPool, TastyLabelPool
